@@ -1,10 +1,12 @@
 # За теб, мамо 🌹
 
-A small interactive birthday gift — a tap-through story that blooms a rose and ends in confetti. Built for Mom's 51st, in Bulgarian, mobile-first.
+A small interactive birthday gift — a tap-through story that blooms a rose while the world wakes from night into day, and ends in confetti. Built for Mom's 51st, in Bulgarian, mobile-first.
+
+**🌷 Live:** https://fizzexual.github.io/birthday-gift/
 
 ## How it works
 
-Tap anywhere to move through ten scenes. With each tap the rose opens a little more, the glow warms, and the words build toward the finale — where it bursts into confetti.
+Tap anywhere to move through the scenes. With each tap the rose opens a little more and the world brightens — from a starlit night, through sunrise, into a bright day with drifting clouds and birds — until it bursts into confetti.
 
 - **Tap / click** — next scene
 - **‹** (top-left) or **←** — go back
@@ -29,10 +31,13 @@ npm run preview  # preview the build
 
 ## Make it yours
 
-- **The words** live in [`src/story.js`](src/story.js) — one object per scene (`text`, optional `subtitle`, and `bloom` 0→1).
+- **The words** live in [`src/story.js`](src/story.js) — one object per scene (`text`, optional `subtitle`, `bloom` 0→1, and `sky` 0→1 for night→day).
 - **The rose** is in [`src/components/Rose.jsx`](src/components/Rose.jsx) (petal rings, colors, glow).
+- **The world** (sky palette, sun, stars, clouds, birds, hills) is in [`src/components/Landscape.jsx`](src/components/Landscape.jsx).
 - **The finale colors** are in [`src/confetti.js`](src/confetti.js).
 
-The build (`dist/`) is fully static — drop it on any host (Cloudflare Pages, GitHub Pages, Netlify…).
+## Deploy
+
+Pushing to `main` auto-builds and publishes to **GitHub Pages** via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). The build (`dist/`) is fully static with relative paths (`base: './'`), so it also works on any other static host.
 
 Made with love. ❤️

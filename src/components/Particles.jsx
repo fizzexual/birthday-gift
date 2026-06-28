@@ -1,11 +1,12 @@
 import { useMemo } from 'react'
 
-/* Soft warm dust drifting up + a few rose petals drifting down.
+/* Ambient life drifting over the scene:
+   warm pollen rising, a few rose petals falling, and floating hearts.
    Pure CSS animation (see App.css) so it stays smooth on a phone. */
 
 const rnd = (a, b) => a + Math.random() * (b - a)
 
-export default function Particles({ count = 16 }) {
+export default function Particles({ count = 12 }) {
   const motes = useMemo(
     () =>
       Array.from({ length: count }, () => ({
@@ -21,7 +22,7 @@ export default function Particles({ count = 16 }) {
 
   const petals = useMemo(
     () =>
-      Array.from({ length: 7 }, () => ({
+      Array.from({ length: 5 }, () => ({
         left: rnd(0, 100),
         size: rnd(10, 18),
         dur: rnd(11, 20),
@@ -29,6 +30,20 @@ export default function Particles({ count = 16 }) {
         drift: rnd(-60, 60),
         spin: rnd(-220, 220),
         hue: rnd(-12, 12),
+      })),
+    [],
+  )
+
+  const hearts = useMemo(
+    () =>
+      Array.from({ length: 8 }, () => ({
+        left: rnd(4, 96),
+        size: rnd(11, 22),
+        dur: rnd(12, 22),
+        delay: rnd(-22, 0),
+        sway: rnd(-34, 34),
+        opacity: rnd(0.3, 0.6),
+        hue: rnd(-14, 10),
       })),
     [],
   )
@@ -44,12 +59,12 @@ export default function Particles({ count = 16 }) {
             width: m.size,
             height: m.size,
             opacity: m.opacity,
-            '--dur': `${m.dur}s`,
-            '--delay': `${m.delay}s`,
+            animation: `rise ${m.dur}s linear ${m.delay}s infinite`,
             '--drift': `${m.drift}px`,
           }}
         />
       ))}
+
       {petals.map((p, i) => (
         <svg
           key={`p${i}`}
@@ -59,16 +74,34 @@ export default function Particles({ count = 16 }) {
             left: `${p.left}%`,
             width: p.size,
             height: p.size,
-            '--dur': `${p.dur}s`,
-            '--delay': `${p.delay}s`,
+            animation: `fall ${p.dur}s linear ${p.delay}s infinite`,
             '--drift': `${p.drift}px`,
             '--spin': `${p.spin}deg`,
             filter: `hue-rotate(${p.hue}deg)`,
           }}
         >
+          <path d="M10 0 C4 5 4 14 10 20 C16 14 16 5 10 0 Z" fill="rgba(231,90,120,0.55)" />
+        </svg>
+      ))}
+
+      {hearts.map((h, i) => (
+        <svg
+          key={`h${i}`}
+          className="heart"
+          viewBox="0 0 20 20"
+          style={{
+            left: `${h.left}%`,
+            width: h.size,
+            height: h.size,
+            animation: `floatHeart ${h.dur}s ease-in-out ${h.delay}s infinite`,
+            '--sway': `${h.sway}px`,
+            '--o': h.opacity,
+            filter: `hue-rotate(${h.hue}deg)`,
+          }}
+        >
           <path
-            d="M10 0 C4 5 4 14 10 20 C16 14 16 5 10 0 Z"
-            fill="rgba(231,90,120,0.55)"
+            d="M10 17.5 C2 11.8 3 4.5 8 4.5 C9.6 4.5 10 6 10 6 C10 6 10.4 4.5 12 4.5 C17 4.5 18 11.8 10 17.5 Z"
+            fill="rgba(244,108,138,0.75)"
           />
         </svg>
       ))}

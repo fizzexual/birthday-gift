@@ -49,7 +49,7 @@ function Ring({ count, L, W, rot, from, to, fill, bloom }) {
   const t = easeOut(clamp((bloom - from) / (to - from)))
   const scale = 0.12 + 0.88 * t
   const twist = (1 - t) * -26
-  const opacity = clamp(t * 1.5)
+  const opacity = clamp(t * 2.2)
 
   return (
     <motion.g
@@ -159,10 +159,11 @@ export default function Rose({ bloom = 0, final = false }) {
         />
       </g>
 
-      {/* the bloom */}
+      {/* the bloom — drawn outermost-first so big outer petals sit BEHIND
+          the smaller inner petals (and the rolled centre on top) */}
       <g filter="url(#soft)">
-        {RINGS.map((r, i) => (
-          <Ring key={i} {...r} bloom={bloom} />
+        {RINGS.map((_, i) => RINGS.length - 1 - i).map((idx) => (
+          <Ring key={idx} {...RINGS[idx]} bloom={bloom} />
         ))}
         <Spiral bloom={bloom} />
       </g>

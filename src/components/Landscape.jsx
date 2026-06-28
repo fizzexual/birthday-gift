@@ -71,6 +71,8 @@ export default function Landscape({ sky, final }) {
   const backHill = useTransform(v, (x) => lerpHex('#141231', '#7bb673', x))
   const midHill = useTransform(v, (x) => lerpHex('#100e28', '#57a058', x))
   const frontHill = useTransform(v, (x) => lerpHex('#0a0820', '#3c8043', x))
+  const backGrass = useTransform(v, (x) => lerpHex('#0c0c1d', '#327d3a', x))
+  const frontGrass = useTransform(v, (x) => lerpHex('#070713', '#46a04e', x))
   const rayOp = useTransform(v, (x) => clamp((x - 0.9) / 0.1) * (final ? 0.5 : 0))
 
   const stars = useMemo(
@@ -108,6 +110,17 @@ export default function Landscape({ sky, final }) {
       })),
     [],
   )
+
+  // blades of grass, combined into one path per layer for performance
+  const grass = useMemo(() => {
+    const blade = (x, h, lean, w) =>
+      `M ${x - w} 844 Q ${x + lean * 0.4} ${844 - h * 0.55} ${x + lean} ${844 - h} Q ${x + lean * 0.6} ${844 - h * 0.5} ${x + w} 844 Z`
+    let back = ''
+    for (let x = -8; x < 402; x += 11) back += blade(x + rnd(-3, 3), rnd(24, 50), rnd(-10, 10), 2.6)
+    let front = ''
+    for (let x = -8; x < 402; x += 16) front += blade(x + rnd(-4, 4), rnd(46, 88), rnd(-18, 18), 3.3)
+    return { back, front }
+  }, [])
 
   return (
     <svg
@@ -217,6 +230,10 @@ export default function Landscape({ sky, final }) {
       <motion.path d="M0 612 Q120 548 250 590 Q330 614 390 588 L390 844 L0 844 Z" fill={backHill} />
       <motion.path d="M0 678 Q140 620 270 668 Q340 694 390 666 L390 844 L0 844 Z" fill={midHill} />
       <motion.path d="M0 742 Q120 700 230 738 Q320 770 390 738 L390 844 L0 844 Z" fill={frontHill} />
+
+      {/* grass, swaying in the breeze */}
+      <motion.path className="grass grass--back" d={grass.back} fill={backGrass} />
+      <motion.path className="grass grass--front" d={grass.front} fill={frontGrass} />
     </svg>
   )
 }

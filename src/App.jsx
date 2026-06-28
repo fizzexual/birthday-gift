@@ -88,7 +88,9 @@ export default function App() {
           animate={{ scale: isFinal ? 1.06 : 1, y: isFinal ? -4 : 0 }}
           transition={{ duration: 1.4, ease: 'easeOut' }}
         >
-          <Rose bloom={bloom} final={isFinal} />
+          <div className="rose-sway">
+            <Rose bloom={bloom} final={isFinal} />
+          </div>
         </motion.div>
       </div>
 
