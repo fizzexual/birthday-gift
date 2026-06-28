@@ -4,6 +4,7 @@ import { scenes } from './story'
 import Rose from './components/Rose'
 import Landscape from './components/Landscape'
 import Particles from './components/Particles'
+import Bees from './components/Bees'
 import { celebrate } from './confetti'
 import './App.css'
 
@@ -81,6 +82,7 @@ export default function App() {
       />
 
       <Particles count={14} />
+      <Bees sky={sky} count={3} />
 
       <div className="upper">
         <motion.div

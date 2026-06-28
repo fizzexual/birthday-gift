@@ -325,6 +325,42 @@
   100% { transform: translateY(-110vh) translateX(0) rotate(-6deg); opacity: 0; }
 }
 
+/* bees — gentle wandering flight + fluttering wings */
+.bees {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 1.8s ease;
+}
+.bee {
+  position: absolute;
+  will-change: transform;
+}
+.bee-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.28));
+}
+.bee-wing {
+  animation: beeFlap 0.16s linear infinite alternate;
+  transform-box: fill-box;
+  transform-origin: 50% 92%;
+}
+@keyframes beeFlap {
+  from { transform: scaleY(0.5); }
+  to { transform: scaleY(1); }
+}
+@keyframes beeWander {
+  0% { transform: translate(0, 0) rotate(6deg); }
+  20% { transform: translate(34px, -22px) rotate(-5deg); }
+  42% { transform: translate(70px, 8px) rotate(8deg); }
+  60% { transform: translate(40px, 34px) rotate(-3deg); }
+  80% { transform: translate(-18px, 16px) rotate(5deg); }
+  100% { transform: translate(0, 0) rotate(6deg); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .mote,
   .fpetal,
@@ -336,7 +372,9 @@
   .bird-wings,
   .sunrays,
   .grass,
-  .rose-sway {
+  .rose-sway,
+  .bee,
+  .bee-wing {
     animation: none !important;
   }
 }
