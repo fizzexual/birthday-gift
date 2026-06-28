@@ -82,7 +82,7 @@ export default function App() {
       />
 
       <Particles count={14} />
-      <Bees sky={sky} count={3} />
+      <Bees active={isFinal} count={3} />
 
       <div className="upper">
         <motion.div
